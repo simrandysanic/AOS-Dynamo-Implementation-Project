@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dynamo Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f9; }
+    h1 { color: #333; }
+    h2 { color: #555; }
+    .container { max-width: 800px; margin: auto; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+    th { background: #4CAF50; color: white; }
+    .alive { color: green; }
+    .down { color: red; }
+    .data-row:hover { background: #f0f0f0; }
+    .refresh-btn { padding: 10px 20px; background: #008CBA; color: white; border: none; cursor: pointer; }
+    .refresh-btn:hover { background: #005f87; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Dynamo Key-Value Store</h1>
+    <button class="refresh-btn" onclick="location.reload()">Refresh</button>
+    <h2>Nodes</h2>
+    <table>
+      <tr><th>Node</th><th>Status</th></tr>
+      {% for node, status in nodes.items() %}
+        <tr>
+          <td>{{ node }}</td>
+          <td class="{{ 'alive' if status.status == 'alive' else 'down' }}">
+            {{ 'Alive' if status.status == 'alive' else 'Down' }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+    <h2>Data</h2>
+    <table>
+      <tr><th>Key</th><th>Value</th></tr>
+      {% for key, value in data.items() %}
+        <tr class="data-row">
+          <td>{{ key }}</td>
+          <td>{{ value }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>
